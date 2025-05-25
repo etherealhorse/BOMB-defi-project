@@ -27,19 +27,6 @@ export const getAchievementTitle = (campaign: Campaign): TranslatableText => {
   }
 }
 
-export const getAchievementDescription = (campaign: Campaign): TranslatableText => {
-  switch (campaign.type) {
-    case 'ifo':
-      return {
-        key: 'Committed more than $5 worth of LP in the %title% IFO',
-        data: {
-          title: campaign.title as string,
-        },
-      }
-    default:
-      return campaign.description
-  }
-}
 
 /**
  * Checks if a wallet is eligible to claim points from valid IFO's
@@ -60,24 +47,7 @@ export const getClaimableIfoData = async (account: string): Promise<Achievement[
     | [boolean][]
     | null
 
-  // Get IFO data for all IFO's that are eligible to claim
-  const claimableIfoData = (await multicallv2(
-    pointCenterIfoABI,
-    claimStatuses.reduce((accum, claimStatusArr, index) => {
-      if (claimStatusArr === null) {
-        return accum
-      }
-
-      const [claimStatus] = claimStatusArr
-
-      if (claimStatus === true) {
-        return [...accum, { address: getPointCenterIfoAddress(), name: 'ifos', params: [ifoCampaigns[index].address] }]
-      }
-
-      return accum
-    }, []),
-  )) as IfoMapResponse[]
-
+ 
   // Transform response to an Achievement
   return claimableIfoData.reduce((accum, claimableIfoDataItem) => {
     const claimableCampaignId = claimableIfoDataItem.campaignId.toString()
