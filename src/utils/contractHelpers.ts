@@ -205,16 +205,6 @@ export const getTradingCompetitionContractEaster = (signer?: Signer | Provider) 
   ) as TradingCompetitionEaster
 }
 
-export const getTradingCompetitionContractFanToken = (signer?: Signer | Provider) => {
-  return getContract(
-    tradingCompetitionFanTokenAbi,
-    getTradingCompetitionAddressFanToken(),
-    signer,
-  ) as TradingCompetitionFanToken
-}
-export const getTradingCompetitionContractMobox = (signer?: Signer | Provider) => {
-  return getContract(tradingCompetitionMoboxAbi, getTradingCompetitionAddressMobox(), signer) as TradingCompetitionMobox
-}
 
 export const getTradingCompetitionContractMoD = (signer?: Signer | Provider) => {
   return getContract(tradingCompetitionMoDAbi, getTradingCompetitionAddressMoD(), signer) as TradingCompetitionMoD
